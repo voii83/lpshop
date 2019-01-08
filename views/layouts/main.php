@@ -38,16 +38,28 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Бренд',
+                'url' => ['/site/index'],
+                'options' => ['class' => 'dropdown'],
+                'template' =>  '<a href="{url}" class="url-class">{label}</a>',
+                'items' => [
+                    ['label' => 'О компании', 'url' => ['/site/about']],
+                    ['label' => 'Новости', 'url' => ['/site/news']],
+                    ['label' => 'Видео', 'url' => ['/site/videos']],
+                    ['label' => 'Рекомендации', 'url' => ['/site/recommendation']],
+                ],
+            ],
+            ['label' => 'Коллекции', 'url' => ['/shop']],
+            ['label' => 'Сотрудничество', 'url' => ['/site/cooperation']],
+            ['label' => 'Контакты', 'url' => ['/site/contacts']],
+            ['label' => 'Регистрация', 'url' => ['site/signup'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выйти (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()

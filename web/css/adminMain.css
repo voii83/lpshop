@@ -1,0 +1,20 @@
+.header {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+}
+
+.admin-header-title, .admin-login {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.admin-header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.section-main {
+    margin-top: 25px;
+}

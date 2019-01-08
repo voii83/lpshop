@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\administrator\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -37,6 +37,11 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getAuthAssignment()
+    {
+        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
     }
 
     public static function findIdentity($id)

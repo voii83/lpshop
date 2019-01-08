@@ -3,18 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
+use app\models\SignupForm;
 use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
-class SiteController extends Controller
+class SiteController extends AppController
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
@@ -32,15 +28,12 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -54,23 +47,45 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
+    public function actionAbout()
+    {
+        return $this->render('about');
+    }
+
+    public function actionNews()
+    {
+        return $this->render('news');
+    }
+
+    public function actionVideos()
+    {
+        return $this->render('videos');
+    }
+
+    public function actionRecommendation()
+    {
+        return $this->render('recommendation');
+    }
+
+    public function actionCooperation()
+    {
+        return $this->render('cooperation');
+    }
+
+    public function actionContacts()
+    {
+        return $this->render('contacts');
+    }
+
     public function actionLogin()
     {
+        $this->setMeta('Вход');
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -81,48 +96,27 @@ class SiteController extends Controller
         }
 
         $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        return $this->render('login', compact('model'));
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
+    public function actionSignup()
+    {
+        $this->setMeta('Регистрация');
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+        return $this->render('signup', compact('model'));
+    }
+
     public function actionLogout()
     {
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

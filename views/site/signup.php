@@ -11,14 +11,16 @@ use yii\bootstrap\ActiveForm;
 
 <div class="row">
     <div class="col-sm-12">
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <h2>Оставьте заявку на сотрудничество</h2>
+        <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'email') ?>
+        <?= $form->field($model, 'name') ?>
+        <?= $form->field($model, 'surname') ?>
+        <?= $form->field($model, 'phone') ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
         <div class="form-group">
-            <?= Html::submitButton('Вход', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+            <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

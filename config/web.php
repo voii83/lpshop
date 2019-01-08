@@ -11,6 +11,13 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'administrator' => [
+            'class' => 'app\modules\administrator\Module',
+            'layout' => 'administrator',
+            'defaultRoute' => 'default/index',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -22,6 +29,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            //'loginUrl' => '',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -50,7 +58,9 @@ $config = [
             'rules' => [
             ],
         ],
-
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
     ],
     'params' => $params,
 ];
